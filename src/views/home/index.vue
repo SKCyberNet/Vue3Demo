@@ -4,8 +4,12 @@
       <HeaderTab></HeaderTab>
       <div class="content">
         <ContentLeft class="contentLeft"></ContentLeft>
-        <ContentCenter class="contentCenter"></ContentCenter>
+        <ContentCenter class="contentCenter"> </ContentCenter>
         <ContentRight class="contentRight"></ContentRight>
+        <div class="ButtonArea">
+          <div class="Button" @click="AddPOIs">加点</div>
+          <div class="Button" @click="RemovePOIs">减点</div>
+        </div>
       </div>
     </div>
   </div>
@@ -16,6 +20,8 @@ import HeaderTab from '@/components/layout/headerTab'
 import ContentCenter from '@/components/home/contentCenter/contentCenter'
 import ContentRight from '@/components/home/contentRight/contentRight'
 import ContentLeft from '@/components/home/contentLeft/contentLeft'
+import pois_request from '@/pois'
+
 export default defineComponent({
   components: {
     HeaderTab,
@@ -32,6 +38,18 @@ export default defineComponent({
       __cy.Connect('http://172.18.1.197:8081')
     })
     return {}
+  },
+  methods: {
+    AddPOIs() {
+      __cy.SendRequest('UpdatePOIs', pois_request, (result: any) => {
+        console.log('Request Result : ', result)
+      })
+    },
+    RemovePOIs() {
+      __cy.SendRequest('DeleteAllPOIs', {}, (result: any) => {
+        console.log('Request Result : ', result)
+      })
+    }
   }
 })
 </script>
@@ -53,7 +71,7 @@ export default defineComponent({
     .content {
       display: flex;
       justify-content: space-between;
-      height: 100%; 
+      height: 100%;
       .contentLeft {
         width: 20%;
         background: rgba(0, 0, 0, 0.5);
@@ -69,5 +87,22 @@ export default defineComponent({
       }
     }
   }
+}
+
+.ButtonArea {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  pointer-events: fill;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.Button {
+  padding: 10px 30px;
+  background: #5757b7;
+  color: white;
+  font-size: 16px;
+  margin-right: 12px;
 }
 </style>
