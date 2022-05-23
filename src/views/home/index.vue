@@ -32,7 +32,7 @@ export default defineComponent({
   setup() {
     onMounted(() => {
       // console.log('home')
-      __cy.SetupListener('Demo', (event) => {
+      __cy.SetupListener('Demo', (event:any) => {
         console.log('event :', event)
       })
       __cy.Connect('http://xxxxxxxx:pppp')
